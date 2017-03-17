@@ -1,6 +1,6 @@
 [package]
 name = "fine_grained"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Bastian Meyer <bastian@bastianmeyer.eu>"]
 description = "A stopwatch with lap functionality and nanosecond resolution to time things."
 repository = "https://github.com/BMeu/Fine-Grained"
@@ -12,4 +12,4 @@ license-file = "LICENSE.md"
 time = "0.1.36"
 
 [badges]
-travis-ci = { repository = "https://travis-ci.org/BMeu/Fine-Grained" }
+travis-ci = { repository = "BMeu/Fine-Grained" }
