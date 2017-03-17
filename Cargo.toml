@@ -6,7 +6,7 @@ authors = ["Bastian Meyer <bastian@bastianmeyer.eu>"]
 [dependencies]
 time = "0.1.36"
 
-[packages]
+[package]
 description = "A stopwatch with lap functionality and nanosecond resolution to time things."
 repository = "https://github.com/BMeu/Fine-Grained"
 readme = "README.md"
