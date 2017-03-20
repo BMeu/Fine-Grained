@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/BMeu/Fine-Grained.svg?branch=master)](https://travis-ci.org/BMeu/Fine-Grained)
 [![crates.io](https://img.shields.io/crates/v/fine_grained.svg)](https://crates.io/crates/fine_grained)
+[![Documentation](https://docs.rs/fine_grained/)](https://docs.rs/fine_grained/badge.svg)
 
 A Rust stopwatch with lap functionality and nanosecond resolution.
 
