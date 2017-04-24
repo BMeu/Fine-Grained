@@ -5,6 +5,7 @@ authors = ["Bastian Meyer <bastian@bastianmeyer.eu>"]
 description = "A stopwatch with lap functionality and nanosecond resolution to time things."
 repository = "https://github.com/BMeu/Fine-Grained"
 readme = "README.md"
+homepage = "https://docs.rs/fine_grained/"
 license = "MIT"
 license-file = "LICENSE.md"
 
