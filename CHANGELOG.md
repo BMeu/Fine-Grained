@@ -14,6 +14,7 @@ Possible log types:
 ### v0.1.2 (2017-xx-xx)
 
 * [fixed] Added this changelog.
+* [fixed] Re-licensed under both [MIT](LICENSE-MIT) and [Apache-2.0](LICENSE-APACHE). 
 
 ### v0.1.1 (2017-03-17)
 
