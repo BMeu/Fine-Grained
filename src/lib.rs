@@ -89,6 +89,16 @@
 //!
 //! Inspired by Chucky Ellison's stopwatch (https://github.com/ellisonch/rust-stopwatch).
 
+#![warn(missing_docs,
+        missing_debug_implementations, missing_copy_implementations,
+        trivial_casts, trivial_numeric_casts,
+        unused_extern_crates, unused_import_braces, unused_qualifications, unused_results)]
+#![cfg_attr(feature = "cargo-clippy", warn(empty_enum, enum_glob_use, if_not_else, items_after_statements,
+                                           missing_docs_in_private_items, nonminimal_bool, option_unwrap_used,
+                                           pub_enum_variant_names, print_stdout, result_unwrap_used, similar_names,
+                                           single_match_else, stutter, used_underscore_binding, use_debug,
+                                           wrong_self_convention, wrong_pub_self_convention))]
+
 extern crate time;
 
 use std::fmt;
@@ -96,8 +106,13 @@ use std::fmt;
 /// A stopwatch with lap functionality and nanosecond resolution.
 #[derive(Clone, Debug, Default)]
 pub struct Stopwatch {
+    /// A list of all lap measurements.
     laps: Vec<u64>,
+
+    /// The start time of the currently running lap, or `None` if the stopwatch is not running.
     start_time: Option<u64>,
+
+    /// The sum of all finished laps.
     total_time: u64
 }
 
@@ -200,6 +215,8 @@ impl fmt::Display for Stopwatch {
 
 #[cfg(test)]
 mod tests {
+    #![allow(unused_results)]
+
     use super::Stopwatch;
 
     #[test]
