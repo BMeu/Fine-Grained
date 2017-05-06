@@ -19,5 +19,5 @@ fn single_measurement() {
     thread::sleep(Duration::from_millis(sleep_in_ms));
     let measurement: u64 = stopwatch.lap();
 
-    assert_eq!(measurement / 1_000_000, sleep_in_ms);
+    assert!(measurement / 1_000_000 >= sleep_in_ms);
 }

@@ -29,19 +29,11 @@ fn single_measurement() {
 
     stopwatch.stop();
 
+    let total_sleep_in_ms: u64 = foo_sleep_in_ms + bar_sleep_in_ms + foobar_sleep_in_ms;
     let measured_total: u64 = measurement_foo + measurement_bar + measurement_foobar;
-    assert_eq!(measurement_foo / 1_000_000, foo_sleep_in_ms);
-    assert_eq!(measurement_bar / 1_000_000, bar_sleep_in_ms);
-    assert_eq!(measurement_foobar / 1_000_000, foobar_sleep_in_ms);
+    assert!(measurement_foo / 1_000_000 >= foo_sleep_in_ms);
+    assert!(measurement_bar / 1_000_000 >= bar_sleep_in_ms);
+    assert!(measurement_foobar / 1_000_000 >= foobar_sleep_in_ms);
     assert_eq!(stopwatch.total_time(), measured_total);
-
-    // Allow a small delta since there is a little overhead.
-    let total_time_in_ms: u64 = stopwatch.total_time() / 1_000_000;
-    let expected_total_time: u64 = foo_sleep_in_ms + bar_sleep_in_ms + foobar_sleep_in_ms;
-    let delta: u64 = if total_time_in_ms > expected_total_time {
-        total_time_in_ms - expected_total_time
-    } else {
-        expected_total_time - total_time_in_ms
-    };
-    assert!(delta <= 1);
+    assert!(stopwatch.total_time() / 1_000_000 >= total_sleep_in_ms);
 }
