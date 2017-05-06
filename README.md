@@ -1,6 +1,7 @@
 # Fine-Grained
 
-[![Build Status](https://travis-ci.org/BMeu/Fine-Grained.svg?branch=master)](https://travis-ci.org/BMeu/Fine-Grained)
+[![Build Status on Travis](https://travis-ci.org/BMeu/Fine-Grained.svg?branch=master)](https://travis-ci.org/BMeu/Fine-Grained)
+[![Build Status on AppVeyor](https://ci.appveyor.com/api/projects/status/2khvqps6ovxl3a0b/branch/master?svg=true)](https://ci.appveyor.com/project/BMeu/fine-grained/branch/master)
 [![codecov](https://codecov.io/gh/BMeu/Fine-Grained/branch/master/graph/badge.svg)](https://codecov.io/gh/BMeu/Fine-Grained)
 [![crates.io](https://img.shields.io/crates/v/fine_grained.svg)](https://crates.io/crates/fine_grained)
 [![Documentation](https://docs.rs/fine_grained/badge.svg)](https://docs.rs/fine_grained/)
