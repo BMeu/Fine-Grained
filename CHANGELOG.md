@@ -11,7 +11,7 @@ Possible log types:
 * `[fixed]` for any bug fixes.
 * `[security]` to invite users to upgrade in case of vulnerabilities.
 
-### v0.1.2 (2017-xx-xx)
+### v0.1.2 (2017-05-06)
 
 * [fixed] Added this changelog.
 * [fixed] Re-licensed under both [MIT](LICENSE-MIT) and [Apache-2.0](LICENSE-APACHE).
