@@ -12,6 +12,7 @@ env:
   global:
     - NIGHTLY_VERSION=nightly-2017-05-03
     - CLIPPY_VERSION=0.0.131
+    - RUST_BACKTRACE=1
 before_script:
   - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "$NIGHTLY_VERSION" ]]; then
       cargo install clippy --vers $CLIPPY_VERSION --force;
