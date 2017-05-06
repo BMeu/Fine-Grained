@@ -54,7 +54,7 @@
 //! }
 //! ```
 //!
-//! Get measurements for multiple indepedent tasks and a total time:
+//! Get measurements for multiple independent tasks and a total time:
 //!
 //! ```
 //! extern crate fine_grained;
