@@ -21,7 +21,7 @@ script:
   - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "$NIGHTLY_VERSION" ]]; then
       cargo clippy -- -D warnings;
     fi'
-  - cargo docs --no-deps
+  - cargo doc --no-deps
   - cargo build --all
   - cargo build --all --release
   - cargo test --all
