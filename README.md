@@ -6,7 +6,7 @@
 
 A Rust stopwatch with lap functionality and nanosecond resolution.
 
-# Examples
+## Examples
 
 Get a single measurement:
 
@@ -83,6 +83,6 @@ fn main() {
 }
 ```
 
-# Inspiration
+## Inspiration
 
 Inspired by Chucky Ellison's stopwatch (https://github.com/ellisonch/rust-stopwatch).
