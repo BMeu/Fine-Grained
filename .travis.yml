@@ -17,13 +17,10 @@ before_script:
       cargo install clippy --vers $CLIPPY_VERSION --force;
     fi'
 script:
-  - cargo check --all
   - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "$NIGHTLY_VERSION" ]]; then
       cargo clippy -- -D warnings;
     fi'
   - cargo doc --no-deps
-  - cargo build --all
-  - cargo build --all --release
   - cargo test --all
   - cargo test --all --release
 matrix:
