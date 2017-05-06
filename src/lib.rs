@@ -94,7 +94,7 @@ extern crate time;
 use std::fmt;
 
 /// A stopwatch with lap functionality and nanosecond resolution.
-#[derive(Clone,Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct Stopwatch {
     laps: Vec<u64>,
     start_time: Option<u64>,
