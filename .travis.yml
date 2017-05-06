@@ -1,5 +1,4 @@
 language: rust
-sudo: false
 cache: cargo
 rust:
   - 1.15.0
