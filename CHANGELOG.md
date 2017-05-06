@@ -15,7 +15,7 @@ Possible log types:
 
 * [fixed] Added this changelog.
 * [fixed] Re-licensed under both [MIT](LICENSE-MIT) and [Apache-2.0](LICENSE-APACHE).
-* [added] Implement [`Default`](https://doc.rust-lang.org/std/default/trait.Default.html) for `Stopwatch`.
+* [added] Implemented [`Default`](https://doc.rust-lang.org/std/default/trait.Default.html) for `Stopwatch`.
 
 ### v0.1.1 (2017-03-17)
 
