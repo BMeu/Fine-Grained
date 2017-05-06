@@ -6,7 +6,7 @@ description = "A stopwatch with lap functionality and nanosecond resolution to t
 repository = "https://github.com/BMeu/Fine-Grained"
 readme = "README.md"
 documentation = "https://docs.rs/fine_grained/"
-license = "MIT OR APACHE-2.0"
+license = "MIT/APACHE-2.0"
 keywords = ["stopwatch", "nanosecond", "lap", "time"]
 categories = ["date-and-time", "development-tools", "development-tools::profiling", "development-tools::testing"]
 
