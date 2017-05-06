@@ -1,8 +1,31 @@
 language: rust
+sudo: false
+cache: cargo
 rust:
+  - 1.15.0
+  - 1.16.0
   - stable
   - beta
   - nightly
+  - nightly-2017-05-03
+env:
+  - NIGHTLY_VERSION=nightly-2017-05-03
+  - CLIPPY_VERSION=0.0.131
+before_script:
+  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "$NIGHTLY_VERSION" ]]; then
+      cargo install clippy --vers $CLIPPY_VERSION --force;
+    fi'
+script:
+  - cargo check --all
+  - bash -c 'if [[ "$TRAVIS_RUST_VERSION" == "$NIGHTLY_VERSION" ]]; then
+      cargo clippy -- -D warnings;
+    fi'
+  - cargo docs --no-deps
+  - cargo build --all
+  - cargo build --all --release
+  - cargo test --all
+  - cargo test --all --release
 matrix:
   allow_failures:
     - rust: nightly
+    - rust: nightly-2017-05-03
