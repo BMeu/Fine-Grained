@@ -135,13 +135,14 @@ impl Stopwatch {
     }
 
     /// Start a new lap. Save the last lap's time and return it.
+    ///
+    /// If the stopwatch has not been started, the lap will not be saved and `0` will be returned.
     pub fn lap(&mut self) -> u64 {
-        // Determine this lap's duration. If the stopwatch has not been started, the lap cannot have
-        // a meaningful duration.
+        // Determine this lap's duration. If the stopwatch has not been started, the lap is meaningless.
         let current_time: u64 = time::precise_time_ns();
         let lap: u64 = match self.start_time {
             Some(t) => current_time - t,
-            None => 0
+            None => return 0
         };
 
         // Add this lap's duration to the total time, add this lap to the list of laps,
@@ -244,7 +245,13 @@ mod tests {
 
     #[test]
     fn lap() {
-        let mut stopwatch = Stopwatch::start_new();
+        let mut stopwatch = Stopwatch::new();
+        let lap_0: u64 = stopwatch.lap();
+        assert_eq!(lap_0, 0);
+        assert_eq!(stopwatch.laps.len(), 0);
+        assert_eq!(stopwatch.total_time, lap_0);
+
+        stopwatch.start();
         let lap_1: u64 = stopwatch.lap();
         assert!(lap_1 > 0);
         assert_eq!(stopwatch.laps.len(), 1);
