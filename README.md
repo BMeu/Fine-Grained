@@ -22,7 +22,7 @@ fn main() {
     let mut stopwatch = Stopwatch::start_new();
 
     // Do something long and time it.
-    // do_something_long();
+    do_something_long();
     println!("Duration: {duration}ns", duration = stopwatch);
     stopwatch.stop();
 }
@@ -41,7 +41,7 @@ fn main() {
 
     // Do something repetitive you want to time.
     for _ in 0..10 {
-        // do_something_repetitive();
+        do_something_repetitive();
         stopwatch.lap();
     }
     stopwatch.stop();
@@ -66,15 +66,15 @@ fn main() {
     let mut stopwatch = Stopwatch::start_new();
 
     // Do foo.
-    // do_foo();
+    do_foo();
     let time_to_do_foo: u64 = stopwatch.lap();
 
     // Do bar.
-    // do_bar();
+    do_bar();
     let time_to_do_bar: u64 = stopwatch.lap();
 
     // Do foobar.
-    // do_foobar();
+    do_foobar();
     let time_to_do_foobar: u64 = stopwatch.lap();
 
     stopwatch.stop();
