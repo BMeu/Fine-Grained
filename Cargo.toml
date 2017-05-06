@@ -9,7 +9,7 @@ homepage = "https://docs.rs/fine_grained/"
 license = "MIT OR APACHE-2.0"
 
 [dependencies]
-time = "0.1.36"
+time = "0.1"
 
 [badges]
 travis-ci = { repository = "BMeu/Fine-Grained" }
