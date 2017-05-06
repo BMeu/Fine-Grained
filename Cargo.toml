@@ -5,8 +5,10 @@ authors = ["Bastian Meyer <bastian@bastianmeyer.eu>"]
 description = "A stopwatch with lap functionality and nanosecond resolution to time things."
 repository = "https://github.com/BMeu/Fine-Grained"
 readme = "README.md"
-homepage = "https://docs.rs/fine_grained/"
+documentation = "https://docs.rs/fine_grained/"
 license = "MIT OR APACHE-2.0"
+keywords = ["stopwatch", "nanosecond", "lap", "time"]
+categories = ["date-and-time", "development-tools", "development-tools::profiling", "development-tools::testing"]
 
 [dependencies]
 time = "0.1"
