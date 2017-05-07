@@ -59,7 +59,7 @@ fn do_bar() {
     println!();
 }
 
-/// This would be the second function you actually want to time.
+/// This would be the third function you actually want to time.
 fn do_foobar() {
     use std::io::Write;
 
