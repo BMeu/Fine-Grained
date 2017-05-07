@@ -19,6 +19,8 @@
 //!
 //! # Examples
 //!
+//! The `examples` directory contains these examples if you want to actually run them.
+//!
 //! Get a single measurement:
 //!
 //! ```
@@ -61,7 +63,7 @@
 //!
 //!     // Print the timing results.
 //!     for (i, &lap) in stopwatch.laps().into_iter().enumerate() {
-//!         println!("Round {i}: {duration}ns", i = i, duration = lap);
+//!         println!("   Round {i}:  {duration}ns", i = i, duration = lap);
 //!     }
 //!     println!("Total time: {duration}", duration = stopwatch);
 //! }

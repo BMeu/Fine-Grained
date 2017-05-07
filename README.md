@@ -19,6 +19,8 @@ fine_grained = "0.1"
 
 ## Examples
 
+The [`examples`](examples) directory contains these examples if you want to actually run them.
+
 Get a single measurement:
 
 ```rust
@@ -57,13 +59,13 @@ fn main() {
 
     // Print the timing results.
     for (i, &lap) in stopwatch.laps().into_iter().enumerate() {
-        println!("Round {i}: {duration}ns", i = i, duration = lap);
+        println!("   Round {i}:  {duration}ns", i = i, duration = lap);
     }
     println!("Total time: {duration}", duration = stopwatch);
 }
 ```
 
-Get measurements for multiple indepedent tasks and a total time:
+Get measurements for multiple independent tasks and a total time:
 
 ```rust
 extern crate fine_grained;
@@ -87,10 +89,10 @@ fn main() {
     let time_to_do_foobar: u64 = stopwatch.lap();
 
     stopwatch.stop();
-    println!("Time to do foo: {duration}ns", duration = time_to_do_foo);
-    println!("Time to do bar: {duration}ns", duration = time_to_do_bar);
+    println!("   Time to do foo: {duration}ns", duration = time_to_do_foo);
+    println!("   Time to do bar: {duration}ns", duration = time_to_do_bar);
     println!("Time to do foobar: {duration}ns", duration = time_to_do_foobar);
-    println!("Total time: {duration}", duration = stopwatch);
+    println!("       Total time: {duration}", duration = stopwatch);
 }
 ```
 
