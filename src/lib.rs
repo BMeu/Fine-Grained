@@ -34,7 +34,7 @@
 //!
 //!     // Do something long and time it.
 //!     do_something_long();
-//!     println!("Duration: {duration}ns", duration = stopwatch);
+//!     println!("Duration: {duration}", duration = stopwatch);
 //!     stopwatch.stop();
 //! }
 //! ```
@@ -63,7 +63,7 @@
 //!     for (i, &lap) in stopwatch.laps().into_iter().enumerate() {
 //!         println!("Round {i}: {duration}ns", i = i, duration = lap);
 //!     }
-//!     println!("Total time: {duration}ns", duration = stopwatch);
+//!     println!("Total time: {duration}", duration = stopwatch);
 //! }
 //! ```
 //!
@@ -98,7 +98,7 @@
 //!     println!("Time to do foo: {duration}ns", duration = time_to_do_foo);
 //!     println!("Time to do bar: {duration}ns", duration = time_to_do_bar);
 //!     println!("Time to do foobar: {duration}ns", duration = time_to_do_foobar);
-//!     println!("Total time: {duration}ns", duration = stopwatch);
+//!     println!("Total time: {duration}", duration = stopwatch);
 //! }
 //! ```
 //!
