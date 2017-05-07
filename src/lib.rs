@@ -8,6 +8,15 @@
 //!
 //! Measured times are stored and returned in nanoseconds.
 //!
+//! # Usage
+//!
+//! To use `fine_grained`, add the following to the dependencies section of your project's `Cargo.toml`:
+//!
+//! ```toml
+//! [dependencies]
+//! fine_grained = "0.1"
+//! ```
+//!
 //! # Examples
 //!
 //! Get a single measurement:
