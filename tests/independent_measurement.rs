@@ -12,7 +12,7 @@ use std::time::Duration;
 use fine_grained::Stopwatch;
 
 #[test]
-fn single_measurement() {
+fn independent_measurements() {
     let foo_sleep_in_ms: u64 = 40;
     let bar_sleep_in_ms: u64 = 70;
     let foobar_sleep_in_ms: u64 = 100;
