@@ -14,4 +14,5 @@ categories = ["date-and-time", "development-tools", "development-tools::profilin
 time = "0.1"
 
 [badges]
+appveyor = { repository = "BMeu/fine-grained", branch = "master", service = "github" }
 travis-ci = { repository = "BMeu/Fine-Grained" }
