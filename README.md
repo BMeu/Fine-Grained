@@ -101,7 +101,7 @@ fn main() {
 ## Details
 
 The `Stopwatch` struct is a state machine with four states: `initialized`, `running`, `paused`, and `stopped`. Since
-these states are defined on type-level, invalid method calls (e.g. getting a lap from a stopped stopwatch) are
+these states are defined on the type level, invalid method calls (e.g. getting a lap from a stopped stopwatch) are
 recognized during compilation instead of at run time. The states with the respective transitions are displayed in the
 following chart: 
 
