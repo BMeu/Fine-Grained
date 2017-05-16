@@ -104,7 +104,13 @@
 //! }
 //! ```
 //!
-//! # Inspiration
+//! # Details
+//!
+//! The `Stopwatch` struct is a state machine with four states: `initialized`, `running`, `paused`, and `stopped`. Since
+//! these states are defined on type-level, invalid method calls (e.g. getting a lap from a stopped stopwatch) are
+//! recognized during compilation instead of at run time.
+//!
+//! # Acknowledgements
 //!
 //! Inspired by Chucky Ellison's stopwatch (https://github.com/ellisonch/rust-stopwatch).
 
