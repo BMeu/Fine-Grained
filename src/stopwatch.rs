@@ -206,6 +206,27 @@ impl Stopwatch<Paused> {
             state: PhantomData::<Running>,
         }
     }
+
+    /// Stop the stopwatch.
+    ///
+    /// If a lap has been paused as well, (i.e. [`pause()`](#method.pause) has been called), this lap will be stopped.
+    pub fn stop(mut self) -> Stopwatch<Stopped> {
+        // If the last lap's duration is `0`, there is no paused lap (happens if `lap_and_pause()` has been called).
+        let paused_lap: u64 = match self.laps.pop() {
+            Some(0) => 0,
+            Some(paused_lap) => {
+                self.laps.push(paused_lap);
+                paused_lap
+            },
+            None => unreachable!(),
+        };
+        Stopwatch {
+            laps: self.laps,
+            start_time: None,
+            total_time: self.total_time + paused_lap,
+            state: PhantomData::<Stopped>
+        }
+    }
 }
 
 impl Stopwatch<Stopped> {
@@ -281,6 +302,21 @@ mod tests {
     fn stop() {
         let mut stopwatch = Stopwatch::start_new();
         let lap: u64 = stopwatch.lap();
+        let stopwatch = stopwatch.stop();
+        assert!(stopwatch.start_time.is_none());
+        assert_eq!(stopwatch.laps.len(), 1);
+        assert_eq!(stopwatch.total_time, lap);
+
+        let mut stopwatch = Stopwatch::start_new();
+        let lap: u64 = stopwatch.lap();
+        let stopwatch = stopwatch.pause();
+        let stopwatch = stopwatch.stop();
+        assert!(stopwatch.start_time.is_none());
+        assert_eq!(stopwatch.laps.len(), 2);
+        assert!(stopwatch.total_time > lap);
+
+        let stopwatch = Stopwatch::start_new();
+        let (lap, stopwatch) = stopwatch.lap_and_pause();
         let stopwatch = stopwatch.stop();
         assert!(stopwatch.start_time.is_none());
         assert_eq!(stopwatch.laps.len(), 1);
