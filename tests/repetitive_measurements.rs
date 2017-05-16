@@ -21,7 +21,7 @@ fn repetitive_measurements() {
         thread::sleep(Duration::from_millis(sleep_in_ms));
         stopwatch.lap();
     }
-    stopwatch.stop();
+    let stopwatch = stopwatch.stop();
 
     let mut measured_total: u64 = 0;
     for lap in stopwatch.laps() {

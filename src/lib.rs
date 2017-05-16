@@ -32,7 +32,7 @@
 //!
 //! fn main() {
 //!     // Get a new stopwatch and start it.
-//!     let mut stopwatch = Stopwatch::start_new();
+//!     let stopwatch = Stopwatch::start_new();
 //!
 //!     // Do something long and time it.
 //!     do_something_long();
@@ -59,7 +59,7 @@
 //!         do_something_repetitive();
 //!         stopwatch.lap();
 //!     }
-//!     stopwatch.stop();
+//!     let stopwatch = stopwatch.stop();
 //!
 //!     // Print the timing results.
 //!     for (i, &lap) in stopwatch.laps().into_iter().enumerate() {
@@ -96,7 +96,7 @@
 //!     do_foobar();
 //!     let time_to_do_foobar: u64 = stopwatch.lap();
 //!
-//!     stopwatch.stop();
+//!     let stopwatch = stopwatch.stop();
 //!     println!("Time to do foo: {duration}ns", duration = time_to_do_foo);
 //!     println!("Time to do bar: {duration}ns", duration = time_to_do_bar);
 //!     println!("Time to do foobar: {duration}ns", duration = time_to_do_foobar);
@@ -112,6 +112,7 @@
         missing_debug_implementations, missing_copy_implementations,
         trivial_casts, trivial_numeric_casts,
         unused_extern_crates, unused_import_braces, unused_qualifications, unused_results)]
+#![cfg_attr(feature = "cargo-clippy", allow(inline_always))]
 #![cfg_attr(feature = "cargo-clippy", warn(empty_enum, enum_glob_use, if_not_else, items_after_statements,
                                            missing_docs_in_private_items, nonminimal_bool, option_unwrap_used,
                                            pub_enum_variant_names, print_stdout, result_unwrap_used, similar_names,

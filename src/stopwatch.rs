@@ -5,14 +5,35 @@
 // modified, or distributed except according to those terms.
 
 //! The actual stopwatch implementation.
+//!
+//! See the [crate documentation](../index.html) for examples.
 
 use std::fmt;
+use std::marker::PhantomData;
 
 use time;
 
+/// A unit-like struct for marking a stopwatch as initialized.
+#[derive(Clone, Copy, Debug)]
+struct Initialized;
+
+/// A unit-like struct for marking a stopwatch as running.
+#[derive(Clone, Copy, Debug)]
+struct Running;
+
+/// A unit-like struct for marking a stopwatch as paused.
+#[derive(Clone, Copy, Debug)]
+struct Paused;
+
+/// A unit-like struct for marking a stopwatch as stopped.
+#[derive(Clone, Copy, Debug)]
+struct Stopped;
+
 /// A stopwatch with lap functionality and nanosecond resolution.
+///
+/// See the [crate documentation](index.html) for examples.
 #[derive(Clone, Debug, Default)]
-pub struct Stopwatch {
+pub struct Stopwatch<State> {
     /// A list of all lap measurements.
     laps: Vec<u64>,
 
@@ -20,84 +41,20 @@ pub struct Stopwatch {
     start_time: Option<u64>,
 
     /// The sum of all finished laps.
-    total_time: u64
+    total_time: u64,
+
+    /// The state of the stopwatch.
+    state: PhantomData<State>,
 }
 
-impl Stopwatch {
-    /// Initialize a new stopwatch without starting it.
-    pub fn new() -> Stopwatch {
-        Stopwatch { laps: vec![], start_time: None, total_time: 0 }
+impl<State> Stopwatch<State> {
+    // TODO: Replace with `get_state()`? Or hard code result for each state?
+    /// Determine if the stopwatch is currently running.
+    pub fn is_running(&self) -> bool {
+        self.start_time.is_some()
     }
 
-    /// Initialize a new stopwatch and start it.
-    pub fn start_new() -> Stopwatch {
-        let mut stopwatch = Stopwatch::new();
-        stopwatch.start();
-        stopwatch
-    }
-
-    /// Start the stopwatch.
-    pub fn start(&mut self) {
-        self.start_time = Some(time::precise_time_ns());
-    }
-
-    /// Start a new lap. Save the last lap's time and return it.
-    ///
-    /// If the stopwatch has not been started, the lap will not be saved and `0` will be returned.
-    pub fn lap(&mut self) -> u64 {
-        // Determine this lap's duration. If the stopwatch has not been started, the lap is meaningless.
-        let current_time: u64 = time::precise_time_ns();
-        let lap: u64 = match self.start_time {
-            Some(t) => current_time - t,
-            None => return 0
-        };
-
-        // Add this lap's duration to the total time, add this lap to the list of laps,
-        // and reset the starting time for the new lap.
-        self.total_time += lap;
-        self.laps.push(lap);
-        self.start_time = Some(current_time);
-
-        lap
-    }
-
-    /// Stop the stopwatch, without updating the total time.
-    ///
-    /// This will not reset the stopwatch, i.e. the total time and the laps will be preserved.
-    pub fn stop(&mut self) {
-        self.start_time = None;
-    }
-
-    /// Re-initialize the stopwatch without restarting it.
-    pub fn reset(&mut self) {
-        self.laps = vec![];
-        self.start_time = None;
-        self.total_time = 0;
-    }
-
-    /// Re-initialize the stopwatch and start it.
-    pub fn restart(&mut self) {
-        self.reset();
-        self.start();
-    }
-
-    /// Get the total time the stopwatch has been running.
-    ///
-    /// If the stopwatch is still running, the total time is the time from starting the
-    /// stopwatch until now. Otherwise, it is the sum of all laps.
-    pub fn total_time(&self) -> u64 {
-        match self.start_time {
-            Some(current_lap_start_time) => {
-                /// If the stopwatch is currently running, the total time is the saved total time
-                /// plus the current lap's duration up to this point.
-                let current_time: u64 = time::precise_time_ns();
-                let lap: u64 = current_time - current_lap_start_time;
-                self.total_time + lap
-            },
-            None => self.total_time
-        }
-    }
-
+    // TODO: Implement `IntoIterator` instead for iterating over the laps.
     /// Get the list of all measured lap times in the order the laps were timed.
     pub fn laps(&self) -> &Vec<u64> {
         &self.laps
@@ -108,13 +65,164 @@ impl Stopwatch {
         self.laps.len()
     }
 
-    /// Determine if the stopwatch is currently running.
-    pub fn is_running(&self) -> bool {
-        self.start_time.is_some()
+    /// Get the total time the stopwatch has been running.
+    ///
+    /// If the stopwatch is still running, the total time is the time from starting the
+    /// stopwatch until now. Otherwise, it is the sum of all laps.
+    pub fn total_time(&self) -> u64 {
+        match self.start_time {
+            Some(current_lap_start_time) => {
+                // If the stopwatch is currently running, the total time is the saved total time plus the current lap's
+                // duration up to this point.
+                let current_time: u64 = time::precise_time_ns();
+                let lap: u64 = current_time - current_lap_start_time;
+                self.total_time + lap
+            },
+            None => self.total_time
+        }
     }
 }
 
-impl fmt::Display for Stopwatch {
+impl Stopwatch<Initialized> {
+    /// Initialize a new stopwatch without starting it.
+    pub fn new() -> Stopwatch<Initialized> {
+        Stopwatch {
+            laps: Vec::new(),
+            start_time: None,
+            total_time: 0,
+            state: PhantomData::<Initialized>,
+        }
+    }
+
+    /// Start the stopwatch.
+    pub fn start(self) -> Stopwatch<Running> {
+        Stopwatch {
+            laps: self.laps,
+            start_time: Some(time::precise_time_ns()),
+            total_time: self.total_time,
+            state: PhantomData::<Running>,
+        }
+    }
+}
+
+impl Stopwatch<Running> {
+    // TODO: Add an example for what this is a shortcut.
+    /// Initialize a new stopwatch and start it.
+    ///
+    /// This a shortcut for
+    pub fn start_new() -> Stopwatch<Running> {
+        Stopwatch::<Initialized>::new().start()
+    }
+
+    /// Start a new lap. Save the last lap's time and return it.
+    pub fn lap(&mut self) -> u64 {
+        let lap: u64 = self.finish_current_lap();
+        self.start_time = Some(time::precise_time_ns());
+        lap
+    }
+
+    /// Finish the current lap and immediately pause the stopwatch.
+    pub fn lap_and_pause(mut self) -> (u64, Stopwatch<Paused>) {
+        let lap: u64 = self.finish_current_lap();
+
+        // Insert an empty lap into the list. This will be removed on resume.
+        self.laps.push(0);
+
+        let stopwatch = Stopwatch {
+            laps: self.laps,
+            start_time: None,
+            total_time: self.total_time,
+            state: PhantomData::<Paused>,
+        };
+
+        (lap, stopwatch)
+    }
+
+    /// Finish the current lap and immediately stop the stopwatch.
+    pub fn lap_and_stop(mut self) -> (u64, Stopwatch<Stopped>) {
+        let lap: u64 = self.finish_current_lap();
+        (lap, self.stop())
+    }
+
+    // TODO: Explain what happens to the current lap.
+    /// Pause the stopwatch.
+    pub fn pause(mut self) -> Stopwatch<Paused> {
+        // Store how long the current lap has been running so far.
+        let lap: u64 = self.get_current_laps_duration();
+        self.laps.push(lap);
+
+        Stopwatch {
+            laps: self.laps,
+            start_time: None,
+            total_time: self.total_time,
+            state: PhantomData::<Paused>,
+        }
+    }
+
+    /// Stop the stopwatch.
+    pub fn stop(self) -> Stopwatch<Stopped> {
+        Stopwatch {
+            laps: self.laps,
+            start_time: None,
+            total_time: self.total_time,
+            state: PhantomData::<Stopped>,
+        }
+    }
+
+    /// Finish the current lap: get its duration and add it to the list of laps and the total time.
+    #[inline(always)]
+    fn finish_current_lap(&mut self) -> u64 {
+        let lap: u64 = self.get_current_laps_duration();
+        self.total_time += lap;
+        self.laps.push(lap);
+        lap
+    }
+
+    /// Get the current lap's duration up to this point..
+    #[inline(always)]
+    fn get_current_laps_duration(&self) -> u64 {
+        // Determine this lap's duration.
+        let current_time: u64 = time::precise_time_ns();
+        match self.start_time {
+            Some(time) => current_time - time,
+            None => unreachable!()
+        }
+    }
+}
+
+impl Stopwatch<Paused> {
+    // TODO: Explain what happens to the paused lap.
+    /// Resume the stopwatch.
+    pub fn resume(mut self) -> Stopwatch<Running> {
+        let paused_lap: u64 = match self.laps.pop() {
+            Some(duration) => duration,
+            None => 0
+        };
+        Stopwatch {
+            laps: self.laps,
+            // The start time of the paused lap is the time when
+            start_time: Some(time::precise_time_ns() - paused_lap),
+            total_time: self.total_time,
+            state: PhantomData::<Running>,
+        }
+    }
+}
+
+impl Stopwatch<Stopped> {
+    // TODO: What is this an alias for?
+    /// Re-initialize the stopwatch without restarting it.
+    pub fn reset(self) -> Stopwatch<Initialized> {
+        Stopwatch::new()
+    }
+
+    // TODO: What is this an alias for?
+    /// Re-initialize the stopwatch and start it.
+    pub fn restart(self) -> Stopwatch<Running> {
+        Stopwatch::start_new()
+    }
+}
+
+impl<State> fmt::Display for Stopwatch<State> {
     /// Formats the total time using the given formatter.
     fn fmt(&self, formatter: &mut fmt::Formatter) -> fmt::Result {
         write!(formatter, "{total_time}ns", total_time = self.total_time())
@@ -145,20 +253,14 @@ mod tests {
 
     #[test]
     fn start() {
-        let mut stopwatch = Stopwatch::new();
-        stopwatch.start();
+        let stopwatch = Stopwatch::new();
+        let stopwatch = stopwatch.start();
         assert!(stopwatch.start_time.is_some());
     }
 
     #[test]
     fn lap() {
-        let mut stopwatch = Stopwatch::new();
-        let lap_0: u64 = stopwatch.lap();
-        assert_eq!(lap_0, 0);
-        assert_eq!(stopwatch.laps.len(), 0);
-        assert_eq!(stopwatch.total_time, lap_0);
-
-        stopwatch.start();
+        let mut stopwatch = Stopwatch::start_new();
         let lap_1: u64 = stopwatch.lap();
         assert!(lap_1 > 0);
         assert_eq!(stopwatch.laps.len(), 1);
@@ -177,7 +279,7 @@ mod tests {
     fn stop() {
         let mut stopwatch = Stopwatch::start_new();
         let lap: u64 = stopwatch.lap();
-        stopwatch.stop();
+        let stopwatch = stopwatch.stop();
         assert!(stopwatch.start_time.is_none());
         assert_eq!(stopwatch.laps.len(), 1);
         assert_eq!(stopwatch.total_time, lap);
@@ -187,7 +289,8 @@ mod tests {
     fn reset() {
         let mut stopwatch = Stopwatch::start_new();
         stopwatch.lap();
-        stopwatch.reset();
+        let stopwatch = stopwatch.stop();
+        let stopwatch = stopwatch.reset();
         assert_eq!(stopwatch.laps, vec![]);
         assert_eq!(stopwatch.start_time, None);
         assert_eq!(stopwatch.total_time, 0);
@@ -197,7 +300,8 @@ mod tests {
     fn restart() {
         let mut stopwatch = Stopwatch::start_new();
         stopwatch.lap();
-        stopwatch.restart();
+        let stopwatch = stopwatch.stop();
+        let stopwatch = stopwatch.restart();
         assert_eq!(stopwatch.laps, vec![]);
         assert!(stopwatch.start_time.is_some());
         assert_eq!(stopwatch.total_time, 0);
@@ -214,7 +318,7 @@ mod tests {
         assert_eq!(stopwatch.start_time.unwrap(), start_time);
 
         stopwatch.lap();
-        stopwatch.stop();
+        let stopwatch = stopwatch.stop();
         total_time = stopwatch.total_time();
         assert_eq!(total_time, stopwatch.total_time);
     }
@@ -241,10 +345,10 @@ mod tests {
 
     #[test]
     fn is_running() {
-        let mut stopwatch = Stopwatch::new();
+        let stopwatch = Stopwatch::new();
         assert!(!stopwatch.is_running());
 
-        stopwatch.start();
+        let stopwatch = stopwatch.start();
         assert!(stopwatch.is_running());
     }
 

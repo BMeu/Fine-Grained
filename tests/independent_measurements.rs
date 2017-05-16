@@ -27,7 +27,7 @@ fn independent_measurements() {
     thread::sleep(Duration::from_millis(foobar_sleep_in_ms));
     let measurement_foobar: u64 = stopwatch.lap();
 
-    stopwatch.stop();
+    let stopwatch = stopwatch.stop();
 
     let total_sleep_in_ms: u64 = foo_sleep_in_ms + bar_sleep_in_ms + foobar_sleep_in_ms;
     let measured_total: u64 = measurement_foo + measurement_bar + measurement_foobar;

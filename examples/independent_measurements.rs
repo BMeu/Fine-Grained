@@ -24,7 +24,7 @@ fn main() {
     do_foobar();
     let time_to_do_foobar: u64 = stopwatch.lap();
 
-    stopwatch.stop();
+    let stopwatch = stopwatch.stop();
     println!("   Time to do foo: {duration}ns", duration = time_to_do_foo);
     println!("   Time to do bar:  {duration}ns", duration = time_to_do_bar);
     println!("Time to do foobar: {duration}ns", duration = time_to_do_foobar);

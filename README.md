@@ -32,7 +32,7 @@ use fine_grained::Stopwatch;
 
 fn main() {
     // Get a new stopwatch and start it.
-    let mut stopwatch = Stopwatch::start_new();
+    let stopwatch = Stopwatch::start_new();
 
     // Do something long and time it.
     do_something_long();
@@ -57,7 +57,7 @@ fn main() {
         do_something_repetitive();
         stopwatch.lap();
     }
-    stopwatch.stop();
+    let stopwatch = stopwatch.stop();
 
     // Print the timing results.
     for (i, &lap) in stopwatch.laps().into_iter().enumerate() {
@@ -90,7 +90,7 @@ fn main() {
     do_foobar();
     let time_to_do_foobar: u64 = stopwatch.lap();
 
-    stopwatch.stop();
+    let stopwatch = stopwatch.stop();
     println!("   Time to do foo: {duration}ns", duration = time_to_do_foo);
     println!("   Time to do bar: {duration}ns", duration = time_to_do_bar);
     println!("Time to do foobar: {duration}ns", duration = time_to_do_foobar);

@@ -17,7 +17,7 @@ fn main() {
         do_something_repetitive();
         stopwatch.lap();
     }
-    stopwatch.stop();
+    let stopwatch = stopwatch.stop();
 
     // The `println!()` is only needed because our repetitive task does not print newlines.
     println!();

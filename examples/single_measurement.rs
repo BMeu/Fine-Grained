@@ -10,7 +10,7 @@ use fine_grained::Stopwatch;
 
 fn main() {
     // Get a new stopwatch and start it.
-    let mut stopwatch = Stopwatch::start_new();
+    let stopwatch = Stopwatch::start_new();
 
     // Do something long and time it.
     do_something_long();
