@@ -48,7 +48,6 @@ pub struct Stopwatch<State> {
 }
 
 impl<State> Stopwatch<State> {
-    // TODO: Replace with `get_state()`? Or hard code result for each state?
     /// Determine if the stopwatch is currently running.
     pub fn is_running(&self) -> bool {
         self.start_time.is_some()
@@ -106,12 +105,11 @@ impl Stopwatch<Initialized> {
 }
 
 impl Stopwatch<Running> {
-    // TODO: Add an example for what this is a shortcut.
     /// Initialize a new stopwatch and start it.
     ///
-    /// This a shortcut for
+    /// This an alias for [`Stopwatch::new()`](#method.new)[`.start()`](#method.start)
     pub fn start_new() -> Stopwatch<Running> {
-        Stopwatch::<Initialized>::new().start()
+        Stopwatch::new().start()
     }
 
     /// Start a new lap. Save the last lap's time and return it.
@@ -144,8 +142,9 @@ impl Stopwatch<Running> {
         (lap, self.stop())
     }
 
-    // TODO: Explain what happens to the current lap.
     /// Pause the stopwatch.
+    ///
+    /// The current lap is inserted into the list of laps with its duration at this time.
     pub fn pause(mut self) -> Stopwatch<Paused> {
         // Store how long the current lap has been running so far.
         let lap: u64 = self.get_current_laps_duration();
@@ -191,16 +190,17 @@ impl Stopwatch<Running> {
 }
 
 impl Stopwatch<Paused> {
-    // TODO: Explain what happens to the paused lap.
     /// Resume the stopwatch.
+    ///
+    /// If a lap has been paused as well (i.e. [`pause()`](#method.pause) has been called), this lap will be resumed.
     pub fn resume(mut self) -> Stopwatch<Running> {
         let paused_lap: u64 = match self.laps.pop() {
             Some(duration) => duration,
-            None => 0
+            None => unreachable!()
         };
         Stopwatch {
             laps: self.laps,
-            // The start time of the paused lap is the time when
+            // The start time of the paused lap dates back to the current time minus the paused lap's duration.
             start_time: Some(time::precise_time_ns() - paused_lap),
             total_time: self.total_time,
             state: PhantomData::<Running>,
@@ -209,14 +209,16 @@ impl Stopwatch<Paused> {
 }
 
 impl Stopwatch<Stopped> {
-    // TODO: What is this an alias for?
     /// Re-initialize the stopwatch without restarting it.
+    ///
+    /// This is an alias for [`Stopwatch::new()`](#method.new).
     pub fn reset(self) -> Stopwatch<Initialized> {
         Stopwatch::new()
     }
 
-    // TODO: What is this an alias for?
     /// Re-initialize the stopwatch and start it.
+    ///
+    /// This is an alias for [`Stopwatch::start_new()`](#method.start_new).
     pub fn restart(self) -> Stopwatch<Running> {
         Stopwatch::start_new()
     }
