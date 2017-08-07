@@ -15,19 +15,19 @@ use time;
 
 /// A unit-like struct for marking a stopwatch as initialized.
 #[derive(Clone, Copy, Debug)]
-struct Initialized;
+pub struct Initialized;
 
 /// A unit-like struct for marking a stopwatch as running.
 #[derive(Clone, Copy, Debug)]
-struct Running;
+pub struct Running;
 
 /// A unit-like struct for marking a stopwatch as paused.
 #[derive(Clone, Copy, Debug)]
-struct Paused;
+pub struct Paused;
 
 /// A unit-like struct for marking a stopwatch as stopped.
 #[derive(Clone, Copy, Debug)]
-struct Stopped;
+pub struct Stopped;
 
 /// A stopwatch with lap functionality and nanosecond resolution.
 ///
