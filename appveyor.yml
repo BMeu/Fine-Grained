@@ -6,13 +6,13 @@ environment:
       target: x86_64-pc-windows-msvc
     - channel: stable
       target: i686-pc-windows-msvc
-    - channel: 1.16.0
+    - channel: 1.18.0
       target: x86_64-pc-windows-msvc
-    - channel: 1.16.0
+    - channel: 1.18.0
       target: i686-pc-windows-msvc
-    - channel: 1.15.0
+    - channel: 1.17.0
       target: x86_64-pc-windows-msvc
-    - channel: 1.15.0
+    - channel: 1.17.0
       target: i686-pc-windows-msvc
     - channel: beta
       target: x86_64-pc-windows-msvc
@@ -28,13 +28,13 @@ environment:
       target: x86_64-pc-windows-gnu
     - channel: stable
       target: i686-pc-windows-gnu
-    - channel: 1.16.0
+    - channel: 1.18.0
       target: x86_64-pc-windows-gnu
-    - channel: 1.16.0
+    - channel: 1.18.0
       target: i686-pc-windows-gnu
-    - channel: 1.15.0
+    - channel: 1.17.0
       target: x86_64-pc-windows-gnu
-    - channel: 1.15.0
+    - channel: 1.17.0
       target: i686-pc-windows-gnu
     - channel: beta
       target: x86_64-pc-windows-gnu
