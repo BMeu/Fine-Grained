@@ -7,6 +7,8 @@
 extern crate fine_grained;
 
 use fine_grained::Stopwatch;
+use fine_grained::Running;
+use fine_grained::Stopped;
 
 fn main() {
     // Get a new stopwatch and start it.
