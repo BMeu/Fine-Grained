@@ -128,5 +128,9 @@
 extern crate time;
 
 pub use self::stopwatch::Stopwatch;
+pub use self::stopwatch::Initialized;
+pub use self::stopwatch::Running;
+pub use self::stopwatch::Paused;
+pub use self::stopwatch::Stopped;
 
 mod stopwatch;
