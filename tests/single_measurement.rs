@@ -10,6 +10,7 @@ use std::thread;
 use std::time::Duration;
 
 use fine_grained::Stopwatch;
+use fine_grained::Running;
 
 #[test]
 fn single_measurement() {
