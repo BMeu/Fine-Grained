@@ -11,7 +11,7 @@ keywords = ["stopwatch", "nanosecond", "lap", "time"]
 categories = ["date-and-time", "development-tools", "development-tools::profiling", "development-tools::testing"]
 
 [dependencies]
-time = "0.1"
+time = "0.2"
 
 [badges]
 appveyor = { repository = "BMeu/fine-grained", branch = "master", service = "github" }
